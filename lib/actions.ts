@@ -1,5 +1,10 @@
 import { ProjectForm } from '@/common.types';
-import { createProjectMutation, createUserMutation, getUserQuery } from '@/graphql';
+import {
+  createProjectMutation,
+  createUserMutation,
+  getUserQuery,
+  projectsQuery,
+} from '@/graphql';
 import { GraphQLClient } from 'graphql-request';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -99,4 +104,18 @@ const createProject = async (form: ProjectForm, creatorId: string, token: string
   }
 };
 
-export { createProject, createUser, fetchToken, getUser };
+const fetchAllProjects = async (category?: string, endCursor?: string) => {
+  const variables = {
+    category,
+    endCursor,
+  };
+
+  try {
+    const data = await makeGraphqlRequest(projectsQuery, variables);
+    return data;
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};
+
+export { createProject, createUser, fetchToken, getUser, fetchAllProjects };

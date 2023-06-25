@@ -5,6 +5,7 @@
     "grafbase",
     "headlessui",
     "NEXTAUTH",
+    "pencile",
     "pnpx"
   ],
   "css.lint.unknownAtRules": "ignore"
