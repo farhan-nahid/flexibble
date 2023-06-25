@@ -1,4 +1,11 @@
 {
-  "cSpell.words": ["cloudinary", "Flexibble", "grafbase", "headlessui"],
+  "cSpell.words": [
+    "cloudinary",
+    "Flexibble",
+    "grafbase",
+    "headlessui",
+    "NEXTAUTH",
+    "pnpx"
+  ],
   "css.lint.unknownAtRules": "ignore"
 }
