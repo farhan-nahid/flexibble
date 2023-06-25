@@ -28,4 +28,23 @@ const createUserMutation = `
     }
 `;
 
-export { createUserMutation, getUserQuery };
+const createProjectMutation = `
+    mutation CreateProject($input: CreateProjectInput!) {
+        projectCreate(input: $input) {
+            project {
+                id
+                name
+                description
+                imageUrl
+                githubUrl
+                demoUrl
+                creator {
+                    name
+                    email
+                }
+            }
+        }
+    }
+`;
+
+export { createProjectMutation, createUserMutation, getUserQuery };
