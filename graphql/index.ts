@@ -97,6 +97,28 @@ const getProjectByIdQuery = `
   }
 `;
 
+const updateProjectMutation = `
+  mutation UpdateProject($id: ID!, $input: ProjectUpdateInput!) {
+    projectUpdate(by: {id: $id}, input: $input) {
+      project {
+        title
+        githubUrl
+        description
+        liveSiteUrl
+        id
+        image
+        category
+        createdBy {
+          name
+          email
+          avatarUrl
+          id
+        }
+      }
+    }
+  }
+`;
+
 const getSingleUserProjectsQuery = `
   query getSingleUserProjects($userId: ID!, $last: Int = 4) {
     user(by: {id: $userId}) {
@@ -139,4 +161,5 @@ export {
   getSingleUserProjectsQuery,
   getUserQuery,
   projectsQuery,
+  updateProjectMutation,
 };
