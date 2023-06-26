@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { deleteProject, fetchToken } from '@/lib/actions';
+// import { deleteProject, fetchToken } from '@/lib/actions';
+import { fetchToken } from '@/lib/actions';
 
 type Props = {
   projectId: string;
@@ -14,6 +15,10 @@ type Props = {
 const ProjectActions = ({ projectId }: Props) => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const router = useRouter();
+
+  async function deleteProject(projectId: string, token: string) {
+    console.log(projectId, token);
+  }
 
   const handleDeleteProject = async () => {
     setIsDeleting(true);
