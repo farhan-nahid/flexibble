@@ -1,4 +1,4 @@
-import Modal from '@/components/create-project/modal';
+import Modal from '@/components/core/modal';
 import ProjectForm from '@/components/create-project/project-form';
 import { getCurrentUser } from '@/lib/session';
 import { redirect } from 'next/navigation';

@@ -2,6 +2,8 @@ import { ProjectForm } from '@/common.types';
 import {
   createProjectMutation,
   createUserMutation,
+  getProjectByIdQuery,
+  getSingleUserProjectsQuery,
   getUserQuery,
   projectsQuery,
 } from '@/graphql';
@@ -123,4 +125,35 @@ const fetchAllProjects = async (category?: string, endCursor?: string) => {
   }
 };
 
-export { createProject, createUser, fetchAllProjects, fetchToken, getUser };
+const fetchProjectsDetailsById = async (projectId: string) => {
+  try {
+    const data = await makeGraphqlRequest(getProjectByIdQuery, { id: projectId });
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
+const getSingleUserProjects = async (userId: string, last?: number) => {
+  try {
+    const data = await makeGraphqlRequest(getSingleUserProjectsQuery, {
+      userId,
+      last,
+    });
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
+export {
+  createProject,
+  createUser,
+  fetchAllProjects,
+  fetchProjectsDetailsById,
+  fetchToken,
+  getSingleUserProjects,
+  getUser,
+};
