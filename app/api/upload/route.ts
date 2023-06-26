@@ -31,7 +31,6 @@ export async function POST(request: Request) {
     const result = await cloudinary.uploader.upload(path, options);
     return NextResponse.json({ data: result }, { status: 200 });
   } catch (error: any) {
-    console.log(error.message);
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
