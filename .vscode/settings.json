@@ -8,7 +8,8 @@
     "headlessui",
     "NEXTAUTH",
     "pencile",
-    "pnpx"
+    "pnpx",
+    "Profilee"
   ],
   "css.lint.unknownAtRules": "ignore"
 }
