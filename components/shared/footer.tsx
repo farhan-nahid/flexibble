@@ -54,7 +54,7 @@ const Footer = () => (
     <div className='flexBetween footer_copyright'>
       <p>@ {new Date().getFullYear()} Flexibble. All rights reserved</p>
       <p className='text-gray'>
-        <span className='text-black hover:text-purple-700 cursor-pointer font-semibold'>
+        <span className='text-black hover:text-primary-purple cursor-pointer font-semibold'>
           Farhan
         </span>{' '}
         Ahmed Nahid

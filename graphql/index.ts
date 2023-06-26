@@ -77,4 +77,66 @@ const projectsQuery = `
   }
 `;
 
-export { createProjectMutation, createUserMutation, getUserQuery, projectsQuery };
+const getProjectByIdQuery = `
+  query getProjectById($id: ID!) {
+    project(by: {id: $id}) {
+      title
+      githubUrl
+      description
+      liveSiteUrl
+      id
+      image
+      category
+      createdBy {
+        name
+        email
+        avatarUrl
+        id
+      }
+    }
+  }
+`;
+
+const getSingleUserProjectsQuery = `
+  query getSingleUserProjects($userId: ID!, $last: Int = 4) {
+    user(by: {id: $userId}) {
+      projects (first: $last) {
+        edges {
+          node {
+            title
+            githubUrl
+            description
+            liveSiteUrl
+            id
+            image
+            category
+            createdBy {
+              name
+              email
+              avatarUrl
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const deleteProjectMutation = `
+  mutation DeleteProject($id: ID!) {
+    projectDelete(by: {id: $id}) {
+      deletedId
+    }
+  }
+`;
+
+export {
+  createProjectMutation,
+  createUserMutation,
+  deleteProjectMutation,
+  getProjectByIdQuery,
+  getSingleUserProjectsQuery,
+  getUserQuery,
+  projectsQuery,
+};
