@@ -21,7 +21,7 @@ export interface ProjectInterface {
     name: string;
     email: string;
     avatarUrl: string;
-    id: string;
+    userId: string;
   };
 }
 

@@ -1,10 +1,13 @@
 {
   "cSpell.words": [
     "cloudinary",
+    "endcursor",
     "Flexibble",
+    "googleusercontent",
     "grafbase",
     "headlessui",
     "NEXTAUTH",
+    "pencile",
     "pnpx"
   ],
   "css.lint.unknownAtRules": "ignore"

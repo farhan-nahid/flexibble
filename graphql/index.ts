@@ -1,5 +1,5 @@
 const getUserQuery = `
-    query GetUser($email: string!) {
+    query GetUser($email: String!) {
         user(by: { email: $email }) {
             id
             name
@@ -13,14 +13,14 @@ const getUserQuery = `
 `;
 
 const createUserMutation = `
-    mutation CreateUser($input: CreateUserInput!) {
+    mutation CreateUser($input: UserCreateInput!) {
         userCreate(input: $input) {
             user {
-                id
+                userId
                 name
                 email
-                description
                 avatarUrl
+                description
                 githubUrl
                 linkedinUrl
             }
@@ -29,16 +29,16 @@ const createUserMutation = `
 `;
 
 const createProjectMutation = `
-    mutation CreateProject($input: CreateProjectInput!) {
+    mutation CreateProject($input: ProjectCreateInput!) {
         projectCreate(input: $input) {
             project {
                 id
-                name
+                title
                 description
-                imageUrl
+                image
                 githubUrl
-                demoUrl
-                creator {
+                liveSiteUrl
+                createdBy {
                     name
                     email
                 }
@@ -47,4 +47,34 @@ const createProjectMutation = `
     }
 `;
 
-export { createProjectMutation, createUserMutation, getUserQuery };
+const projectsQuery = `
+  query getProjects($category: String, $endcursor: String) {
+    projectSearch(first: 8, after: $endcursor, filter: {category: {eq: $category}}) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          title
+          githubUrl
+          description
+          liveSiteUrl
+          id
+          image
+          category
+          createdBy {
+            name
+            email
+            avatarUrl
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
+export { createProjectMutation, createUserMutation, getUserQuery, projectsQuery };
