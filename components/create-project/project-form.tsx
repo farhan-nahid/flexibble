@@ -2,7 +2,7 @@
 
 import type { FormState, ProjectInterface, SessionInterface } from '@/common.types';
 import { categoryFilters } from '@/constant';
-import { createProject, fetchToken } from '@/lib/actions';
+import { createProject, fetchToken, updateProject } from '@/lib/actions';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
@@ -66,10 +66,16 @@ export default function ProjectForm({ session, type, project }: ProjectFormProps
       if (type === 'create') {
         await createProject(form!, session?.user!, token!);
 
-        // router.push('/');
+        router.push('/');
+      }
+
+      if (type === 'edit') {
+        await updateProject(form!, project?.id! as string, token);
+
+        router.push('/');
       }
     } catch (error) {
-      console.log(error);
+      alert(`Failed to ${type === 'create' ? 'create' : 'edit'} a project. Try again!`);
     } finally {
       setSubmitting(false);
       // router.push('/');
