@@ -41,7 +41,6 @@ const createProjectMutation = `
                 createdBy {
                     name
                     email
-                    id
                 }
             }
         }
@@ -124,30 +123,18 @@ const getSingleUserProjectsQuery = `
   }
 `;
 
-/* query getUserProjects($id: ID!, $last: Int = 4) {
-  user(by: { id: $id }) {
-    id
-    name
-    email
-    description
-    avatarUrl
-    githubUrl
-    linkedinUrl
-    projects(last: $last) {
-      edges {
-        node {
-          id
-          title
-          image
-        }
-      }
+const deleteProjectMutation = `
+  mutation DeleteProject($id: ID!) {
+    projectDelete(by: {id: $id}) {
+      deletedId
     }
   }
-} */
+`;
 
 export {
   createProjectMutation,
   createUserMutation,
+  deleteProjectMutation,
   getProjectByIdQuery,
   getSingleUserProjectsQuery,
   getUserQuery,

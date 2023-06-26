@@ -2,11 +2,13 @@ import { ProjectForm } from '@/common.types';
 import {
   createProjectMutation,
   createUserMutation,
+  deleteProjectMutation,
   getProjectByIdQuery,
   getSingleUserProjectsQuery,
   getUserQuery,
   projectsQuery,
 } from '@/graphql';
+
 import { GraphQLClient } from 'graphql-request';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -19,6 +21,13 @@ const apiKey = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_KEY || '' : '
 const serverUrl = isProduction
   ? process.env.NEXT_PUBLIC_GRAFBASE_SERVER_URL || ''
   : 'http://localhost:3000';
+
+interface CreateUser {
+  id: string;
+  name: string;
+  image: string;
+  email: string;
+}
 
 const client = new GraphQLClient(apiUrl);
 
@@ -43,13 +52,13 @@ const getUser = async (email: string) => {
   }
 };
 
-const createUser = async (id: string, name: string, email: string, avatarUrl: string) => {
+const createUser = async ({ id, name, image, email }: CreateUser) => {
   const variables = {
     input: {
       userId: id,
       name,
       email,
-      avatarUrl,
+      avatarUrl: image,
     },
   };
 
@@ -90,7 +99,6 @@ const uploadImage = async (imagePath: string) => {
 };
 
 const createProject = async (form: ProjectForm, user: any, token: string) => {
-  console.log(user);
   const imageUrl = await uploadImage(form.image);
 
   if (imageUrl?.data?.secure_url) {
@@ -148,9 +156,23 @@ const getSingleUserProjects = async (userId: string, last?: number) => {
   }
 };
 
+const deleteProject = async (projectId: string, token: string) => {
+  try {
+    client.setHeader('Authorization', `Bearer ${token}`);
+    const data = await makeGraphqlRequest(deleteProjectMutation, {
+      id: projectId,
+    });
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
 export {
   createProject,
   createUser,
+  deleteProject,
   fetchAllProjects,
   fetchProjectsDetailsById,
   fetchToken,

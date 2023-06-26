@@ -66,12 +66,13 @@ export const authOptions: NextAuthOptions = {
         };
 
         if (!userExists?.user) {
-          await createUser(
-            user?.id! as string,
-            user.name! as string,
-            user.email! as string,
-            user.image! as string
-          );
+          const payload = {
+            id: user.id as string,
+            name: user.name as string,
+            image: user.image as string,
+            email: user.email as string,
+          };
+          await createUser(payload);
         }
         return true;
       } catch (error) {
