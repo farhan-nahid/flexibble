@@ -1,5 +1,5 @@
 const getUserQuery = `
-    query GetUser($email: string!) {
+    query GetUser($email: String!) {
         user(by: { email: $email }) {
             id
             name
@@ -13,14 +13,14 @@ const getUserQuery = `
 `;
 
 const createUserMutation = `
-    mutation CreateUser($input: CreateUserInput!) {
+    mutation CreateUser($input: UserCreateInput!) {
         userCreate(input: $input) {
             user {
-                id
+                userId
                 name
                 email
-                description
                 avatarUrl
+                description
                 githubUrl
                 linkedinUrl
             }
@@ -29,16 +29,16 @@ const createUserMutation = `
 `;
 
 const createProjectMutation = `
-    mutation CreateProject($input: CreateProjectInput!) {
+    mutation CreateProject($input: ProjectCreateInput!) {
         projectCreate(input: $input) {
             project {
                 id
-                name
+                title
                 description
-                imageUrl
+                image
                 githubUrl
-                demoUrl
-                creator {
+                liveSiteUrl
+                createdBy {
                     name
                     email
                 }
@@ -66,10 +66,10 @@ const projectsQuery = `
           image
           category
           createdBy {
-            id
-            email
             name
+            email
             avatarUrl
+            id
           }
         }
       }

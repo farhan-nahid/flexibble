@@ -2,6 +2,7 @@ import { auth, config, g } from '@grafbase/sdk';
 
 const User: any = g
   .model('User', {
+    userId: g.string().unique(),
     name: g.string().length({ min: 3, max: 50 }),
     email: g.string().unique(),
     avatarUrl: g.url(),
@@ -19,7 +20,7 @@ const Project: any = g
   .model('Project', {
     title: g.string().length({ min: 3, max: 50 }),
     description: g.string().length({ min: 3, max: 500 }),
-    image: g.url(),
+    imageUrl: g.url(),
     liveSiteUrl: g.url(),
     githubUrl: g.url(),
     category: g.string().search(),
@@ -31,27 +32,8 @@ const Project: any = g
   });
 
 const jwt = auth.JWT({
-  issuer: 'https://grafbase.com',
+  issuer: 'grafbase',
   secret: g.env('NEXTAUTH_SECRET'),
-  // audience: 'https://api.grafbase.com',
-  // algorithms: ['HS256'],
-  // expiresIn: '1d',
-  // notBefore: '2d',
-  // header: {
-  //   typ: 'JWT',
-  // },
-  // payload: {
-  //   sub: '1234567890',
-  //   name: 'John Doe',
-  //   admin: true,
-  //   iat: 1516239022,
-  // },
-  // sign: {
-  //   expiresIn: '1d',
-  // },
-  // verify: {
-  //   maxAge: '2d',
-  // },
 });
 
 export default config({
@@ -59,8 +41,6 @@ export default config({
 
   auth: {
     providers: [jwt],
-    rules: (rules) => {
-      rules.private();
-    },
+    rules: (rules) => rules.private(),
   },
 });

@@ -64,33 +64,33 @@ export default function ProjectForm({ session, type, project }: ProjectFormProps
 
     try {
       if (type === 'create') {
-        await createProject(form!, session?.user?.id!, token!);
+        await createProject(form!, session?.user!, token!);
 
-        router.push('/');
+        // router.push('/');
       }
     } catch (error) {
       console.log(error);
     } finally {
       setSubmitting(false);
-      router.push('/');
+      // router.push('/');
     }
   };
 
   return (
     <form onSubmit={handleFormSubmit} className='flexStart form'>
       <div className='flexStart form_image-container'>
-        <label htmlFor='poster' className='flexCenter form_image-label'>
+        <label htmlFor='imageUrl' className='flexCenter form_image-label'>
           {!form.image && 'Choose a poster for your project'}
         </label>
         <input
-          id='image'
+          id='imageUrl'
           type='file'
           accept='image/*'
           required={type === 'create' ? true : false}
           className='form_image-input'
           onChange={(e) => handleChangeImage(e)}
         />
-        {form.image && (
+        {form?.image && (
           <Image
             src={form?.image}
             className='sm:p-10 object-contain z-20'

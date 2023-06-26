@@ -13,12 +13,9 @@ export default function ProjectCard({ data }: Props) {
   const [randomLikes, setRandomLikes] = useState(0);
   const [randomViews, setRandomViews] = useState('');
 
-  const {
-    id,
-    title,
-    image,
-    createdBy: { id: userId, avatarUrl, name },
-  } = data ?? {};
+  const { id, title, image, createdBy } = data ?? {};
+
+  const { userId, avatarUrl, name } = createdBy ?? {};
 
   useEffect(() => {
     setRandomLikes(Math.floor(Math.random() * 10000));

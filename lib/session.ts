@@ -21,18 +21,18 @@ export const authOptions: NextAuthOptions = {
       const encodedToken = jsonwebtoken.sign(
         {
           ...token,
-          iss: 'https://grafbase.com',
-          iat: Date.now() / 1000,
+          iss: 'grafbase',
+          // iat: Date.now() / 1000,
           exp: Math.floor(Date.now() / 1000) + 60 * 60,
         },
-        secret,
-        { algorithm: 'HS512' }
+        secret
+        // { algorithm: 'HS512' }
       );
       return encodedToken;
     },
     decode: async ({ secret, token }) => {
       const decodedToken = jsonwebtoken.verify(token!, secret, {
-        algorithms: ['HS512'],
+        // algorithms: ['HS512'],
       }) as JWT;
       return decodedToken;
     },
@@ -44,6 +44,7 @@ export const authOptions: NextAuthOptions = {
 
       try {
         const data = (await getUser(email)) as { user?: UserProfile };
+
         const newSession = {
           ...session,
           user: {
@@ -60,16 +61,21 @@ export const authOptions: NextAuthOptions = {
     },
     async signIn({ user }: { user: AdapterUser | User }) {
       try {
-        console.log('hit');
-        const userExists = (await getUser(user.email!)) as { user?: UserProfile };
-        console.log('hit');
+        const userExists = (await getUser(user.email! as string)) as {
+          user?: UserProfile;
+        };
+
         if (!userExists?.user) {
-          await createUser(user.name!, user.email!, user.image!);
-          return true;
+          await createUser(
+            user?.id! as string,
+            user.name! as string,
+            user.email! as string,
+            user.image! as string
+          );
         }
         return true;
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         return false;
       }
     },
@@ -77,11 +83,12 @@ export const authOptions: NextAuthOptions = {
 
   theme: {
     colorScheme: 'light',
-    logo: '/logo.png',
+    logo: '/logo.svg',
   },
 };
 
 export async function getCurrentUser() {
   const user = (await getServerSession(authOptions)) as SessionInterface;
+
   return user;
 }

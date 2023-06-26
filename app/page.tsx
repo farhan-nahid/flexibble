@@ -18,6 +18,7 @@ interface ProjectSearch {
 
 export default async function Home() {
   const data = (await fetchAllProjects()) as ProjectSearch;
+
   const projects = data?.projectSearch?.edges?.map((edge) => edge?.node) || [];
 
   if (projects.length === 0) {
@@ -31,7 +32,7 @@ export default async function Home() {
   }
 
   return (
-    <div>
+    <div className='flexStart flex-col paddings mb-16'>
       <section className='projects-grid'>
         {projects.map((node: ProjectInterface) => {
           return <ProjectCard key={node.id} data={node} />;
